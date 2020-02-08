@@ -196,22 +196,22 @@ esac
 # ------------------------------
 # Install
 case ${THIS_SYSTEM} in
-    macOS)
+    macos)
         install_on_macos
         ;;
-    Linux)
+    linux)
         case ${THIS_DISTRIBUTION} in
-            Debian)
+            debian)
                 install_on_debian
                 ;;
-            Alpine)
+            alpine)
                 install_on_alpine
                 ;;
             *)
                 echo "Unknown Linux distributor. You have to install softwares manual."
         esac
         ;;
-    Unknown)
+    unknown)
         echo "Unknown Linux distributor. You have to install softwares manual."
 esac
 
