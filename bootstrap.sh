@@ -168,12 +168,12 @@ case "$(uname -s)" in
         # According to:
         #   <https://www.infoq.cn/article/536L*XPRudOwCkiTDgM4>
         if [ command -v systemd-detect-virt >/dev/null 2>&1 ]; then
-            THIS_PLATFORM=$(systemd-detect-virt)
+            THIS_PLATFORM=$(systemd-detect-virt);
             if [ "x${THIS_PLATFORM}" != "xnone" ]; then
-                THIS_MACHINE=Virtual
+                THIS_MACHINE=Virtual;
             then
-                THIS_MACHINE=Physical
-            fi
+                THIS_MACHINE=Physical;
+            fi;
         else
             THIS_PLATFORM=Unknown
             THIS_MACHINE=Unknown
