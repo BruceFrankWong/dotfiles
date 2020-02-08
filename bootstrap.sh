@@ -169,15 +169,19 @@ case "$(uname -s)" in
         #   <https://www.infoq.cn/article/536L*XPRudOwCkiTDgM4>
         if command -v systemd-detect-virt >/dev/null 2>&1; then
             THIS_PLATFORM=$(systemd-detect-virt)
-            if [ "${THIS_PLATFORM}" != "none" ]; then
-                THIS_MACHINE=virtual
-            then
-                THIS_MACHINE=physical
-            fi;
         else
             THIS_PLATFORM=unknown
-            THIS_MACHINE=unknown
         fi
+        case ${THIS_PLATFORM} in
+            unknown)
+                THIS_MACHINE=unknown
+                ;;
+            none)
+                THIS_MACHINE=physical
+                ;;
+            *)
+                THIS_MACHINE=virtual
+        esac
         ;;
 
     *)
