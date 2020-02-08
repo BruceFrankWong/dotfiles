@@ -65,7 +65,7 @@ fi
 # ==============================
 
 # The default project path.
-DEFAULT_PROJECT_PATH=${HOME}/projects/
+DEFAULT_PROJECT_PATH=${HOME}/Projects/
 
 # docker-compose version.
 DOCKER_COMPOSE_VERSION=1.25.3
@@ -96,6 +96,8 @@ fi
 if [ -f ${HOME}/.bashrc ]; then
     mv ${HOME}/.bashrc ${HOME}/.bashrc_old
 fi
+
+# bashrc.
 ln -s ${DOTFILES}/config/shell/bashrc ${HOME}/.bashrc
 
 
@@ -128,7 +130,7 @@ if [ -f ${HOME}/.zshrc ]; then
     mv ${HOME}/.zshrc ${HOME}/.zshrc_old
 fi
 
-# ZSH.
+# zshrc.
 ln -s ${DOTFILES}/config/shell/zshrc ${HOME}/.zshrc
 
 
