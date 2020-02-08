@@ -18,6 +18,9 @@
 
 
 
+set -euxo pipefail
+
+
 # ==============================
 # Functions.
 # ==============================
@@ -166,7 +169,7 @@ case "$(uname -s)" in
         #   <https://www.infoq.cn/article/536L*XPRudOwCkiTDgM4>
         if [ command -v systemd-detect-virt >/dev/null 2>&1 ]; then
             THIS_PLATFORM=$(systemd-detect-virt)
-            if [ "${THIS_PLATFORM}" != "none" ]; then
+            if [ "x${THIS_PLATFORM}" != "xnone" ]; then
                 MACHINE=Virtual
             then
                 MACHINE=Physical
