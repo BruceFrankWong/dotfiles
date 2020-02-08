@@ -144,21 +144,21 @@ esac
 #   <https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux>
 case "$(uname -s)" in
     Darwin*)
-        THIS_SYSTEM=macOS
+        THIS_SYSTEM=macos
         THIS_DISTRIBUTION=$(sw_vers -productName)
         THIS_VERSION=$(sw_vers -productVersion)
 
         # According to:
         #   <https://stackoverflow.com/questions/28529633/how-to-detect-if-mac-os-x-is-being-run-inside-a-virtual-THIS_MACHINE>
         if [ -n "$(ioreg -l | grep 'Vendor Name' | grep -E 'Oracle|VirtualBox|Parallels|VMware')" ]; then
-            THIS_MACHINE=Virtual
+            THIS_MACHINE=virtual
         else
-            THIS_MACHINE=Physical
+            THIS_MACHINE=physical
         fi
         ;;
 
     Linux*)
-        THIS_SYSTEM=Linux
+        THIS_SYSTEM=linux
         # Alpine has no lsb_release by default.
         # THIS_DISTRIBUTION=$(lsb_release -a | grep 'Distributor ID' | cut -f2)
         # THIS_VERSION=$(lsb_release -a | grep 'Release' | cut -f2)
@@ -167,24 +167,24 @@ case "$(uname -s)" in
 
         # According to:
         #   <https://www.infoq.cn/article/536L*XPRudOwCkiTDgM4>
-        if [ command -v systemd-detect-virt >/dev/null 2>&1 ]; then
-            THIS_PLATFORM=$(systemd-detect-virt);
-            if [ "x${THIS_PLATFORM}" != "xnone" ]; then
-                THIS_MACHINE=Virtual;
+        if command -v systemd-detect-virt >/dev/null 2>&1; then
+            THIS_PLATFORM=$(systemd-detect-virt)
+            if [ "${THIS_PLATFORM}" != "none" ]; then
+                THIS_MACHINE=virtual
             then
-                THIS_MACHINE=Physical;
+                THIS_MACHINE=physical
             fi;
         else
-            THIS_PLATFORM=Unknown
-            THIS_MACHINE=Unknown
+            THIS_PLATFORM=unknown
+            THIS_MACHINE=unknown
         fi
         ;;
 
     *)
-        THIS_SYSTEM=Unknown
-        THIS_DISTRIBUTION=Unknown
-        THIS_VERSION=Unknown
-        THIS_MACHINE=Unknown
+        THIS_SYSTEM=unknown
+        THIS_DISTRIBUTION=unknown
+        THIS_VERSION=unknown
+        THIS_MACHINE=unknown
 esac
 
 
