@@ -170,13 +170,13 @@ case "$(uname -s)" in
         if [ command -v systemd-detect-virt >/dev/null 2>&1 ]; then
             THIS_PLATFORM=$(systemd-detect-virt)
             if [ "x${THIS_PLATFORM}" != "xnone" ]; then
-                MACHINE=Virtual
+                THIS_MACHINE=Virtual
             then
-                MACHINE=Physical
+                THIS_MACHINE=Physical
             fi
         else
             THIS_PLATFORM=Unknown
-            MACHINE=Unknown
+            THIS_MACHINE=Unknown
         fi
         ;;
 
