@@ -47,7 +47,7 @@ case "$(uname -s)" in
 
         # According to:
         #   <https://www.infoq.cn/article/536L*XPRudOwCkiTDgM4>
-        if [ command -v wocao >/dev/null 2>&1 ]; then
+        if [ command -v systemd-detect-virt >/dev/null 2>&1 ]; then
             PLATFORM=$(systemd-detect-virt)
             if [ "${PLATFORM}" != "none" ]; then
                 MACHINE=virtual
