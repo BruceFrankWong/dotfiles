@@ -1,0 +1,6 @@
+[user]
+    name = Bruce Wong
+    email = Bruce.Frank.Wong@gmail.com
+[core]
+    editor = vim
+

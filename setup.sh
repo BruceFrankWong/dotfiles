@@ -88,32 +88,39 @@ DOTFILES=${DEFAULT_PROJECT_PATH}/dotfiles
 # ------------------------------
 # Clone the whole project.
 if [ ! -d ${DEFAULT_PROJECT_PATH} ]; then
-    mkdir ${DEFAULT_PROJECT_PATH}
-    cd ${DEFAULT_PROJECT_PATH}
-    git clone https://github.com/BruceFrankWong/dotfiles.git
+    git clone https://github.com/BruceFrankWong/dotfiles.git ${DOTFILES}
+else
+    echo "***** ERROR *****"
+    echo "The directory ${DEFAULT_PROJECT_PATH} is already existed."
+    exit 1
 fi
 
 
 
 # ------------------------------
 # BASH.
-if [ -f ${HOME}/.bashrc ]; then
-    mv ${HOME}/.bashrc ${HOME}/.bashrc_old
+if [ -f ${DOTFILES}/config/shell/bashrc ]; then
+    if [ -f ${HOME}/.bashrc ]; then
+        rm ${HOME}/.bashrc
+    fi
+    ln -s ${DOTFILES}/config/shell/bashrc ${HOME}/.bashrc
+else
+    echo "WARNING: ${DOTFILES}/config/shell/bashrc not found."
 fi
-
-# bashrc.
-ln -s ${DOTFILES}/config/shell/bashrc ${HOME}/.bashrc
 
 
 # ------------------------------
 # ZSH.
-# Install ZSH.
-if [ -f /bin/zsh ] || [ -f /usr/bin/zsh ]; then
+# Install ZSH, if not installed before.
+if [ ! -f /bin/zsh ] || [ ! -f /usr/bin/zsh ]; then
     sudo apt-get install --assume-yes --no-install-recommends zsh
 fi
 
-# Change user shell.
-chsh --shell /bin/zsh
+# Change user's shell, if not did this before.
+CURRENT_SHELL=$(cat /etc/passwd | grep bruce | cut -d ':' -f7)
+if [ ${CURRENT_SHELL:0-3:3} != zsh ]; then
+    chsh --shell /bin/zsh
+fi
 
 # Make an empty .zshrc file to prevent zsh-newuser-install running when interactive login.
 # touch ${HOME}/.zshrc
@@ -135,13 +142,21 @@ if [ -f ${HOME}/.zshrc ]; then
 fi
 
 # zshrc.
-ln -s ${DOTFILES}/config/shell/zshrc ${HOME}/.zshrc
+if [ -f ${DOTFILES}/config/shell/zshrc ]; then
+    ln -s ${DOTFILES}/config/shell/zshrc ${HOME}/.zshrc
+else
+    echo "WARNING: ${DOTFILES}/config/shell/zshrc not found."
+fi
 
 
 
 # ------------------------------
 # Shell alias.
-ln -s ${DOTFILES}/config/shell/alias ${HOME}/.alias
+if [ -f ${DOTFILES}/config/shell/alias ]; then
+    ln -s ${DOTFILES}/config/shell/alias ${HOME}/.alias
+else
+    echo "WARNING: ${DOTFILES}/config/shell/alias not found."
+fi
 
 
 
@@ -152,13 +167,21 @@ ln -s ${DOTFILES}/config/shell/alias ${HOME}/.alias
 
 # ------------------------------
 # git
-ln -s ${HOME}/.config/git/gitconfig ${HOME}/.gitconfig
+if [ -f ${DOTFILES}/config/git/gitconfig ]; then
+    ln -s ${DOTFILES}/config/git/gitconfig ${HOME}/.gitconfig
+else
+    echo "WARNING: ${DOTFILES}/config/git/gitconfig not found."
+fi
 
 
 
 # ------------------------------
 # vim
-
+if [ -f ${DOTFILES}/config/vim/vimrc ]; then
+    ln -s ${DOTFILES}/config/vim/vimrc ${HOME}/.vimrc
+else
+    echo "WARNING: ${DOTFILES}/config/vim/vimrc not found."
+fi
 
 
 # ------------------------------
@@ -169,15 +192,17 @@ sh -c "$(curl -fsSL https://get.docker.com)"
 
 # ------------------------------
 # Install docker-compose
-curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" \
+URL_DOCKER_COMPOSE="https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}"
+sudo curl -L "${URL_DOCKER_COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" \
     -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 # ------------------------------
 # Add mirror sites, and restart docker.
-ln -s ${HOME}/.config/git/gitconfig ${HOME}/.gitconfig
-systemctl daemon-reload
-systemctl restart docker.service
+sudo ln -s ${DOTFILES}/config/docker/daemon.json /etc/docker/daemon.json
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker.service
 
 
 
