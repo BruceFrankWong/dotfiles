@@ -53,8 +53,8 @@ fi
 # Modify sudo.
 touch /etc/sudoers.d/${USERNAME}
 
-cat <<EOF > /etc/sudoers.d/${NEW_USER}
-${NEW_USER}\tALL-(ALL"ALL) ALL
+cat <<EOF > /etc/sudoers.d/${USERNAME}
+${USERNAME}\tALL-(ALL"ALL) ALL
 EOF
 
 chown root:root /etc/sudoers.d/${USERNAME}
