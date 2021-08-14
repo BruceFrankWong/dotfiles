@@ -25,7 +25,7 @@ apt-get install -y \
 
 
 # --------------------------------------------------
-# Add user <bruce>.
+# Add new user.
 # --------------------------------------------------
 
 # Get the username.
@@ -38,17 +38,16 @@ if [ $? -eq 0 ]; then
     exit 2
 fi
 
-# Get the password.
-read -p "Enter the password: " PASSWORD
-
 # Do adding user.
-ENCRPYTED=$(perl -e 'print(${PASSWORD}, "password")' ${PASSWORD})
-useradd -m -p ${ENCRPYTED} ${USERNAME}
+useradd -m -s /bin/zsh ${USERNAME}
 if [ $? -eq 0 ]; then
     echo "User ${USERNAME} has been added to system!"
 else
     echo "Failed to add user!"
 fi
+
+# Set the password for new user
+passwd ${USERNAME}
 
 # Modify sudo.
 touch /etc/sudoers.d/${USERNAME}
@@ -59,6 +58,9 @@ EOF
 
 chown root:root /etc/sudoers.d/${USERNAME}
 chmod 440 /etc/sudoers.d/${USERNAME}
+
+# Create <.zshrc>.
+touch /home/${USERNAME}/.zshrc
 
 # END
 
