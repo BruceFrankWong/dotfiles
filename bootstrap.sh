@@ -28,16 +28,18 @@ apt-get install -y \
 # Add user <bruce>.
 # --------------------------------------------------
 
-# Get the username and password.
-read -p "Enter username : " USERNAME
-read -p "Enter password : " PASSWORD
+# Get the username.
+read -p "Enter the username: " USERNAME
 
 # Check whether the user is existed.
-egrep "^$username" /etc/passwd >/dev/null
+egrep "^${USERNAME}" /etc/passwd >/dev/null
 if [ $? -eq 0 ]; then
     echo "User '${USERNAME}' is already existed!"
     exit 2
 fi
+
+# Get the password.
+read -p "Enter the password: " PASSWORD
 
 # Do adding user.
 ENCRPYTED=$(perl -e 'print(${PASSWORD}, "password")' ${PASSWORD})
