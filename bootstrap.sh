@@ -54,7 +54,7 @@ fi
 touch /etc/sudoers.d/${USERNAME}
 
 cat <<EOF > /etc/sudoers.d/${USERNAME}
-${USERNAME}\tALL-(ALL"ALL) ALL
+${USERNAME} ALL=(ALL:ALL) ALL
 EOF
 
 chown root:root /etc/sudoers.d/${USERNAME}
