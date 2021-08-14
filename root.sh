@@ -49,7 +49,11 @@ fi
 # Set the password for new user
 passwd ${USERNAME}
 
-# Modify sudo.
+
+# --------------------------------------------------
+# Config user enviroment.
+# --------------------------------------------------
+# <sudoer> file.
 touch /etc/sudoers.d/${USERNAME}
 
 cat <<EOF > /etc/sudoers.d/${USERNAME}
@@ -59,8 +63,10 @@ EOF
 chown root:root /etc/sudoers.d/${USERNAME}
 chmod 440 /etc/sudoers.d/${USERNAME}
 
-# Create <.zshrc>.
+# <.zshrc> file.
 touch /home/${USERNAME}/.zshrc
+chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.zshrc
+chmod 644 /home/${USERNAME}/.zshrc
+
 
 # END
-
