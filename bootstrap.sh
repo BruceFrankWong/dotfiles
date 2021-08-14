@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 # Example:
@@ -31,7 +30,7 @@ apt-get install -y \
 
 # Get the username and password.
 read -p "Enter username : " USERNAME
-read -s -p "Enter password : " PASSWORD
+read -p "Enter password : " PASSWORD
 
 # Check whether the user is existed.
 egrep "^$username" /etc/passwd >/dev/null
