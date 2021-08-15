@@ -26,7 +26,7 @@ apt-get install -y \
     python-pip \
     python3-pip \
     virtualenv \
-    virtuanenvwrapper
+    virtualenvwrapper
 
 
 # --------------------------------------------------
