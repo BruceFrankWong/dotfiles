@@ -21,7 +21,12 @@ apt-get install -y \
     sudo \
     zsh \
     wget \
-    git
+    git \
+    xclip \
+    python-pip \
+    python3-pip \
+    virtualenv \
+    virtuanenvwrapper
 
 
 # --------------------------------------------------
